@@ -122,10 +122,10 @@ b.nhan.tt { background: var(--muc); color: #fff; }
 #dat-lich .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
 #dat-lich h2 { font-size: 42px; margin-bottom: 10px; }
 #dat-lich p { color: var(--muc-mo); }
-.co-giao { display: grid; grid-template-columns: 96px 1fr; gap: 18px; align-items: center; }
-.anh-co { width: 96px; height: 96px; border-radius: 50%; background: var(--vang) var(--watermark) no-repeat center / 120%; border: 3px solid #fff; box-shadow: var(--bong); }
-.co-giao h3 { font-size: 26px; }
-.co-giao .gia { color: var(--dao-dam); font-weight: 700; }
+.chuyen-gia { display: grid; grid-template-columns: 96px 1fr; gap: 18px; align-items: center; }
+.anh-chuyen-gia { width: 96px; height: 96px; border-radius: 50%; background: var(--vang) var(--watermark) no-repeat center / 120%; border: 3px solid #fff; box-shadow: var(--bong); }
+.chuyen-gia h3 { font-size: 26px; }
+.chuyen-gia .gia { color: var(--dao-dam); font-weight: 700; }
 .goi { list-style: none; padding: 0; margin: 18px 0 22px; display: grid; gap: 8px; }
 .goi li::before { content: '☾'; color: var(--ngoc); margin-right: 10px; }
 

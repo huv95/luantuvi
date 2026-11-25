@@ -2,7 +2,7 @@
 export const CONFIG = {
   // Link đặt lịch (Zalo OA, Zalo cá nhân zalo.me/<sđt>, Google Form…). Để trống thì nút hiện "Sắp mở đặt lịch".
   datLich: '',
-  tenCoGiao: 'Cô giáo',
+  tenChuyenGia: 'Chuyên gia',
   // Giá một buổi luận chi tiết. Để trống thì hiện "Liên hệ".
   gia: '',
 };

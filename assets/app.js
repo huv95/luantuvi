@@ -171,7 +171,7 @@ function datLich() {
   if (CONFIG.datLich) { a.href = CONFIG.datLich; }
   else { a.removeAttribute('href'); a.classList.add('tat'); a.textContent = 'Sắp mở đặt lịch'; }
   $('#gia').textContent = CONFIG.gia || 'Liên hệ';
-  $('#ten-co').textContent = CONFIG.tenCoGiao;
+  $('#ten-chuyen-gia').textContent = CONFIG.tenChuyenGia;
 }
 
 await napDoSang();

@@ -5,7 +5,7 @@ Landing page lập lá số Tử Vi và luận sơ lược, làm theo góp ý c�
 - Chỉ hiện 3 mục: **Tổng quan**, **Thiên bàn**, **Bản thân** (Quan Lộc, Tài Bạch, Tật Ách). Bản online luận sơ lược; luận đủ 9 mục là phần đặt lịch.
 - Chỗ tên ghi "Chủ mệnh – [Tên]".
 - Nền sáng, watermark, nét vẽ trang trí; bảng màu Color Hunt `#FFEFD2 #6AB0AF #F5A89A #FFF2A5`.
-- Landing page đặt lịch với cô giáo.
+- Landing page đặt lịch với chuyên gia.
 
 ## Chạy
 
@@ -22,7 +22,7 @@ Mở http://localhost:8010.
 | File | Nội dung |
 |---|---|
 | `index.html` | Trang: hero + form lập lá số, kết quả, đặt lịch |
-| `assets/config.js` | **Sửa ở đây**: link đặt lịch, tên cô giáo, giá |
+| `assets/config.js` | **Sửa ở đây**: link đặt lịch, tên chuyên gia, giá |
 | `assets/laso.js` | Lập lá số trên trình duyệt, chuẩn hoá như `tools/lap-la-so.mjs` bên repo `tuvi` |
 | `assets/mo-ta.js` | Nội dung luận sơ lược (bản nháp, **chờ cô giáo duyệt**) |
 | `assets/app.js` | Vẽ lá số, 3 mục luận, làm sáng sao/cung khi chọn mục |
