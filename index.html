@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nhật Nguyệt Tử Vi – Lập lá số, luận giải</title>
+  <meta name="description" content="Lập lá số Tử Vi miễn phí, xem luận giải sơ lược Tổng quan, Thiên bàn, Bản thân và đặt lịch luận chi tiết với cô giáo.">
+  <link rel="icon" href="assets/watermark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="#"><img src="assets/watermark.svg" alt=""><b>Nhật Nguyệt Tử Vi</b></a>
+      <nav><a href="#lap-la-so">Lập lá số</a><a href="#ket-qua">Luận giải</a><a href="#dat-lich">Đặt lịch</a></nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="lap-la-so">
+      <img class="art" src="assets/watermark.svg" alt="">
+      <div class="wrap">
+        <div>
+          <span class="eyebrow">Miễn phí · Không cần đăng ký</span>
+          <h1>Hiểu mình hơn qua <em>lá số Tử Vi</em></h1>
+          <p class="lead">Nhập ngày giờ sinh để lập lá số và đọc luận giải sơ lược về tính cách, thiên bàn, công việc, tiền bạc, sức khỏe.</p>
+          <ul class="diem">
+            <li>Lá số an sao theo hệ Thái Thứ Lang, đối chiếu tuvivietnam</li>
+            <li>Bấm từng mục để thấy sao và cung liên quan sáng lên</li>
+            <li>Muốn luận kỹ: đặt lịch trực tiếp với cô giáo</li>
+          </ul>
+        </div>
+        <form class="the" id="form-laso" autocomplete="off">
+          <h2>Lập lá số</h2>
+          <p class="phu-de">Ngày sinh theo dương lịch.</p>
+          <div class="truong"><label for="ten">Họ tên</label><input id="ten" placeholder="Nguyễn Văn A" maxlength="60"></div>
+          <div class="hang">
+            <div class="truong"><label for="gioi">Giới tính</label>
+              <select id="gioi"><option value="nam">Nam</option><option value="nu">Nữ</option></select></div>
+            <div class="truong"><label for="ngay-sinh">Ngày sinh</label><input id="ngay-sinh" type="date" required min="1900-01-01" max="2100-12-31"></div>
+          </div>
+          <div class="hang">
+            <div class="truong"><label for="gio">Giờ sinh</label><select id="gio"></select></div>
+            <div class="truong"><label for="nam-xem">Năm xem</label><select id="nam-xem"></select></div>
+          </div>
+          <button class="nut chinh" type="submit">Lập lá số ✦</button>
+          <p class="rieng-tu">Lá số được tính ngay trên máy bạn, thông tin không gửi đi đâu.</p>
+        </form>
+      </div>
+    </section>
+
+    <section id="ket-qua" hidden>
+      <div class="wrap">
+        <div class="tieu-de-kq"><h2>Lá số của bạn</h2><span>Bấm từng mục luận giải để xem sao và cung liên quan sáng lên.</span></div>
+        <div class="ket-qua">
+          <div id="laso" aria-label="Lá số 12 cung"></div>
+          <div>
+            <div id="luan"></div>
+            <p class="ghi-chu">Luận giải sơ lược, mang tính tham khảo. Một lá số cần xem tổng thể sao, cung, vận hạn; muốn luận kỹ hãy đặt lịch bên dưới.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="dat-lich">
+      <div class="wrap">
+        <div>
+          <h2>Luận chi tiết cùng cô giáo</h2>
+          <p>Xem kỹ cả 9 mục: tổng quan, thiên bàn, bản thân, gia đình, xã hội, tình cảm, điền trạch, vận hạn ba năm và lời khuyên. Có bài luận viết kèm căn cứ từng sao.</p>
+        </div>
+        <div class="the">
+          <div class="co-giao">
+            <div class="anh-co" role="img" aria-label="Ảnh cô giáo"></div>
+            <div><h3 id="ten-co">Cô giáo</h3><div class="gia" id="gia">Liên hệ</div></div>
+          </div>
+          <ul class="goi">
+            <li>Trao đổi trực tiếp, hỏi đáp theo câu hỏi riêng</li>
+            <li>Bài luận 9 mục gửi lại sau buổi xem</li>
+            <li>Vận hạn ba năm, nguyệt hạn từng tháng</li>
+          </ul>
+          <a class="nut dao" id="nut-dat-lich" target="_blank" rel="noopener">Đặt lịch</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap">© Nhật Nguyệt Tử Vi · Nội dung mang tính tham khảo.</div></footer>
+  <script type="module" src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none" stroke="#6AB0AF" stroke-width="1.4" stroke-linecap="round">
+  <!-- Watermark tạm: Nhật (mặt trời) + Nguyệt (trăng khuyết) trên vòng quỹ đạo. Thay bằng file của Myn khi có. -->
+  <circle cx="200" cy="200" r="182" stroke-dasharray="2 7"/>
+  <circle cx="200" cy="200" r="150"/>
+  <circle cx="200" cy="200" r="112" stroke-dasharray="1 5"/>
+  <g transform="translate(150 200)">
+    <circle r="38"/>
+    <g stroke-width="1.2">
+      <path d="M0-52v-14M0 52v14M-52 0h-14M52 0h14M-37-37l-10-10M37 37l10 10M-37 37l-10 10M37-37l10-10"/>
+    </g>
+    <circle r="26" stroke-dasharray="1 4"/>
+  </g>
+  <path d="M262 160a44 44 0 1 0 0 80a36 36 0 1 1 0-80z"/>
+  <g stroke-width="1.1">
+    <path d="M200 32v10M195 37h10"/><path d="M332 118v8M328 122h8"/><path d="M76 300v8M72 304h8"/>
+    <path d="M300 318v10M295 323h10"/><path d="M88 96v6M85 99h6"/>
+  </g>
+  <g fill="#6AB0AF" stroke="none">
+    <circle cx="200" cy="18" r="2.4"/><circle cx="382" cy="200" r="2.4"/><circle cx="200" cy="382" r="2.4"/><circle cx="18" cy="200" r="2.4"/>
+  </g>
+</svg>
