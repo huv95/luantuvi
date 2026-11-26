@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" preserveAspectRatio="xMidYMax slice">
+  <!-- Nền tranh thủy mặc tự vẽ (núi xa, sương, núi gần, thuyền, chim) — đặt mờ sau lá số. -->
+  <defs>
+    <filter id="loang" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency=".012 .03" numOctaves="3" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="18"/>
+      <feGaussianBlur stdDeviation="1.6"/>
+    </filter>
+    <filter id="suong"><feGaussianBlur stdDeviation="22"/></filter>
+    <linearGradient id="nui1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5b6b6b" stop-opacity=".55"/><stop offset="1" stop-color="#5b6b6b" stop-opacity="0"/></linearGradient>
+    <linearGradient id="nui2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#344545" stop-opacity=".75"/><stop offset=".8" stop-color="#344545" stop-opacity="0"/></linearGradient>
+    <linearGradient id="nui3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1f2d2d" stop-opacity=".9"/><stop offset="1" stop-color="#1f2d2d" stop-opacity=".15"/></linearGradient>
+  </defs>
+  <circle cx="860" cy="300" r="90" fill="#C9604B" opacity=".35"/>
+  <g filter="url(#loang)">
+    <path fill="url(#nui1)" d="M0 640 C90 560 150 470 230 430 C300 470 330 540 400 520 C470 430 520 330 600 300 C670 360 700 450 780 470 C850 420 900 380 980 400 C1060 450 1120 520 1200 500 V900 H0Z"/>
+    <path fill="url(#nui2)" d="M-20 820 C80 740 140 640 220 600 C280 650 300 720 370 730 C430 650 480 560 560 540 C620 600 640 690 720 700 C800 640 860 610 930 640 C1010 700 1080 760 1220 720 V1000 H-20Z"/>
+  </g>
+  <ellipse cx="600" cy="760" rx="700" ry="70" fill="#fff" opacity=".7" filter="url(#suong)"/>
+  <g filter="url(#loang)">
+    <path fill="url(#nui3)" d="M-20 1200 V960 C40 900 90 840 150 820 C190 860 200 910 250 920 C300 880 330 860 370 880 C420 930 470 1000 560 1030 L560 1200Z"/>
+    <path fill="url(#nui3)" d="M1220 1200 V900 C1150 860 1100 800 1040 790 C1000 830 990 880 940 890 C890 860 860 860 820 900 C780 950 740 1010 680 1050 L680 1200Z"/>
+  </g>
+  <g stroke="#1f2d2d" stroke-linecap="round" fill="none" opacity=".7">
+    <path d="M560 1085 q40 12 80 0" stroke-width="5"/>
+    <path d="M598 1082 v-34" stroke-width="2.5"/>
+    <path d="M598 1050 l18 22 h-18" stroke-width="2"/>
+    <path d="M300 300 q12 -12 24 0 q12 -12 24 0" stroke-width="3"/>
+    <path d="M360 340 q9 -9 18 0 q9 -9 18 0" stroke-width="2.5"/>
+    <path d="M270 360 q7 -7 14 0 q7 -7 14 0" stroke-width="2"/>
+  </g>
+</svg>

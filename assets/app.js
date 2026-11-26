@@ -1,6 +1,8 @@
 import { lapLaSo, napDoSang, GIO } from './laso.js';
 import { CHINH_TINH, DO_SANG, PHU_TINH_MENH, THAN_CU, TUONG_SINH } from './mo-ta.js';
 import { CONFIG } from './config.js';
+import { convertLunarToSolar, convertSolarToLunar, getCanChiYear } from '../lib/lich.js';
+import { STAR_EL } from '../lib/ansao.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
@@ -19,17 +21,73 @@ function dungForm() {
   const nx = $('#nam-xem'), y = new Date().getFullYear();
   for (const n of [y - 1, y, y + 1, y + 2]) nx.append(new Option(n, n));
   nx.value = String(new Date().getMonth() >= 10 ? y + 1 : y);   // cuối năm xem năm sau
-  $('#form-laso').addEventListener('submit', (e) => { e.preventDefault(); chay(); });
+  const form = $('#form-laso');
+  form.addEventListener('change', capNhatLich);
+  form.addEventListener('input', capNhatLich);
+  form.addEventListener('submit', (e) => { e.preventDefault(); chay(); });
+}
+
+// ---- Ngày sinh: dương hoặc âm lịch, luôn quy về dương lịch trước khi lập lá số ---------
+const laAm = () => $('input[name="lich"]:checked').value === 'am';
+const d2 = (n) => String(n).padStart(2, '0');
+
+// Trả { duong, am } hoặc { loi } hoặc null (chưa nhập đủ).
+function docNgaySinh() {
+  if (!laAm()) {
+    const v = $('#ngay-sinh').value;
+    if (!v) return null;
+    const [nam, thang, ngay] = v.split('-').map(Number);
+    return { duong: { ngay, thang, nam }, am: amTuDuong(ngay, thang, nam) };
+  }
+  const ngay = +$('#am-ngay').value, thang = +$('#am-thang').value, nam = +$('#am-nam').value;
+  const nhuan = $('#am-nhuan').checked;
+  if (!ngay || !thang || !nam) return null;
+  if (ngay < 1 || ngay > 30 || thang < 1 || thang > 12 || nam < 1900 || nam > 2100) return { loi: 'Ngày âm lịch không hợp lệ.' };
+  const s = convertLunarToSolar(ngay, thang, nam, nhuan);
+  const am = s && s.year ? amTuDuong(s.day, s.month, s.year) : null;
+  // Quy đổi ngược phải ra đúng ngày đã nhập; lệch là ngày không có (vd. 30 tháng thiếu, tháng nhuận không có).
+  if (!am || am.ngay !== ngay || am.thang !== thang || am.nam !== nam || am.nhuan !== nhuan)
+    return { loi: nhuan ? `Năm ${nam} không có tháng ${thang} nhuận.` : `Không có ngày ${ngay}/${thang}/${nam} âm lịch (tháng thiếu chỉ có 29 ngày).` };
+  return { duong: { ngay: s.day, thang: s.month, nam: s.year }, am };
+}
+function amTuDuong(d, m, y) {
+  const l = convertSolarToLunar(d, m, y);
+  return { ngay: l.day, thang: l.month, nam: l.year, nhuan: Boolean(l.isLeap) };
+}
+
+function capNhatLich() {
+  $('#o-duong').hidden = laAm();
+  $('#o-am').hidden = !laAm();
+  const r = docNgaySinh(), o = $('#quy-doi');
+  o.classList.toggle('loi', Boolean(r?.loi));
+  if (!r) { o.textContent = ''; return; }
+  if (r.loi) { o.textContent = r.loi; return; }
+  const { duong: D, am: A } = r;
+  const amStr = `${d2(A.ngay)}/${d2(A.thang)}${A.nhuan ? ' nhuận' : ''}/${A.nam} (${getCanChiYear(A.nam).can} ${getCanChiYear(A.nam).chi})`;
+  o.textContent = laAm() ? `↔ Dương lịch: ${d2(D.ngay)}/${d2(D.thang)}/${D.nam}` : `↔ Âm lịch: ${amStr}`;
 }
 
 function docForm() {
-  const [nam, thang, ngay] = $('#ngay-sinh').value.split('-').map(Number);
+  const r = docNgaySinh();
+  if (!r || r.loi) return null;
+  const { ngay, thang, nam } = r.duong;
   return { ten: $('#ten').value.trim() || 'Đương số', gioi: $('#gioi').value, ngay, thang, nam,
     gio: +$('#gio').value, namXem: +$('#nam-xem').value };
 }
 
 // ---- Lá số --------------------------------------------------------------------------
-const nhanSao = (s) => `<span class="sao ${s.loai}${SANG.has(s.ds) ? '' : s.ds === 'H' ? ' ham' : ''}" data-sao="${esc(s.ten)}">${esc(s.ten)}${s.ds ? `<sub>${s.ds}</sub>` : ''}</span>`;
+// Ngũ hành để tô màu sao. Phụ tinh lấy từ lib (STAR_EL); lib thiếu chính tinh và tứ hóa nên bổ sung ở đây.
+// Tham Lang, Thiên Lương, Hóa Quyền các sách ghi khác nhau: chọn theo cách phổ biến, chờ cô giáo duyệt.
+const HANH_THEM = {
+  'Tử Vi': 'Thổ', 'Thiên Cơ': 'Mộc', 'Thái Dương': 'Hỏa', 'Vũ Khúc': 'Kim', 'Thiên Đồng': 'Thủy',
+  'Liêm Trinh': 'Hỏa', 'Thiên Phủ': 'Thổ', 'Thái Âm': 'Thủy', 'Tham Lang': 'Thủy', 'Cự Môn': 'Thủy',
+  'Thiên Tướng': 'Thủy', 'Thiên Lương': 'Mộc', 'Thất Sát': 'Kim', 'Phá Quân': 'Thủy',
+  'Hóa Lộc': 'Mộc', 'Hóa Quyền': 'Mộc', 'Hóa Khoa': 'Thủy', 'Hóa Kỵ': 'Thủy',
+  'Tả Phù': 'Thổ', 'Bác Sỹ': 'Thủy', 'LN Văn Tinh': 'Kim', 'Quan Phủ': 'Hỏa',
+};
+const LOP_HANH = { 'Kim': 'kim', 'Mộc': 'moc', 'Thủy': 'thuy', 'Hỏa': 'hoa-h', 'Thổ': 'tho' };
+const hanh = (ten) => LOP_HANH[HANH_THEM[ten] || STAR_EL[ten]] || '';
+const nhanSao = (s) => `<span class="sao ${s.loai} ${hanh(s.ten)}${s.ds === 'H' ? ' ham' : ''}" data-sao="${esc(s.ten)}">${esc(s.ten)}${s.ds ? ` <small>(${s.ds})</small>` : ''}</span>`;
 
 function veLaSo(L, inp) {
   const grid = $('#laso'); grid.innerHTML = '';
@@ -46,19 +104,22 @@ function veLaSo(L, inp) {
       <div class="chan"><span>${c.trangSinh}</span>${c.laDaiHan ? '<b class="nhan dh">ĐH</b>' : ''}${c.laTieuHan ? '<b class="nhan th">TH</b>' : ''}${c.tuan ? '<b class="nhan tt">Tuần</b>' : ''}${c.triet ? '<b class="nhan tt">Triệt</b>' : ''}</div>`;
     grid.append(o);
   }
-  const u = L.info, h = L.han;
+  const u = L.info, h = L.han, M = L.theoTen['Mệnh'];
+  const thuan = u.amDuongNamNu.startsWith('Dương') === (M.chiIdx % 2 === 0);
+  const menhCuc = u.tuongSinhText.replace(/ \(.*\)$/, '');
   const giua = el('div', 'thien-ban');
   giua.innerHTML = `
     <div class="logo-nho" aria-hidden="true"></div>
     <p class="chu-menh">Chủ mệnh</p>
     <h3>${esc(inp.ten)}</h3>
     <dl>
-      <dt>Âm dương</dt><dd>${u.amDuongNamNu}</dd>
+      <dt>Âm dương</dt><dd>${u.amDuongNamNu} · ${thuan ? 'thuận lý' : 'nghịch lý'}</dd>
       <dt>Dương lịch</dt><dd>${u.solarStr}</dd>
       <dt>Âm lịch</dt><dd>${u.lunarStr.replace('Ngày ', '').replace(' (Thường)', '')}</dd>
       <dt>Can chi</dt><dd>${u.canChiStr}</dd>
       <dt>Mệnh</dt><dd>${u.napAm}</dd>
       <dt>Cục</dt><dd>${u.cuc.name}</dd>
+      <dt>Mệnh – Cục</dt><dd>${esc(menhCuc)}</dd>
       <dt>Chủ Mệnh · Thân</dt><dd>${u.menhChu} · ${u.thanChu}</dd>
       <dt>Năm xem</dt><dd>${u.viewYear} ${u.viewYearCanChi} · ${h.tuoi} tuổi</dd>
     </dl>`;
@@ -157,7 +218,7 @@ function sang(muc) {
 
 function chay() {
   const inp = docForm();
-  if (!inp.nam) { $('#ngay-sinh').focus(); return; }
+  if (!inp) { capNhatLich(); (laAm() ? $('#am-ngay') : $('#ngay-sinh')).focus(); return; }
   const L = lapLaSo(inp);
   veLaSo(L, inp);
   veLuan(L);
